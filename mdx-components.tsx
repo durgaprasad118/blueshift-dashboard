@@ -27,5 +27,22 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </blockquote>
     ),
+    pre: ({ children, ...props }) => {
+      if (
+        children &&
+        typeof children === "object" &&
+        "props" in children &&
+        children.props
+      ) {
+        const { className = "", children: codeChildren } = children.props;
+        const lang = className.replace("language-", "") || "";
+        return (
+          <Codeblock lang={lang}>
+            {codeChildren}
+          </Codeblock>
+        );
+      }
+      return <pre {...props}>{children}</pre>;
+    },
   };
 }
