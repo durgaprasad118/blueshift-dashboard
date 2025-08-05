@@ -23,15 +23,15 @@ export default function ChallengeFilter({ className }: FiltersProps) {
 
   const allStatuses: ReadonlyArray<ChallengeStatus> = challengeStatus;
   const displayText =
-    selectedChallengeStatus.length === allStatuses.length
+    selectedChallengeStatus.length === 0 || selectedChallengeStatus.length === allStatuses.length
       ? t("ChallengeCenter.filter__label")
       : selectedChallengeStatus.length === 1
         ? selectedChallengeStatus[0]
         : `${selectedChallengeStatus.length} ${t("ChallengeCenter.filter__selected_statuses")}`;
 
   const toggleAllStatuses = () => {
-    if (selectedChallengeStatus.length === allStatuses.length) {
-      // If all are selected, deselect all
+    if (selectedChallengeStatus.length === 0 || selectedChallengeStatus.length === allStatuses.length) {
+      // If all are selected or none selected, deselect all
       allStatuses.forEach((status) => {
         if (selectedChallengeStatus.includes(status)) {
           toggleChallengeStatus(status);
@@ -48,8 +48,8 @@ export default function ChallengeFilter({ className }: FiltersProps) {
   };
 
   const handleStatusClick = (status: ChallengeStatus) => {
-    if (selectedChallengeStatus.length === allStatuses.length) {
-      // If "All" is selected, deselect all and select only the clicked status
+    if (selectedChallengeStatus.length === 0 || selectedChallengeStatus.length === allStatuses.length) {
+      // If "All" is selected or none selected, deselect all and select only the clicked status
       allStatuses.forEach((s) => {
         if (selectedChallengeStatus.includes(s)) {
           toggleChallengeStatus(s);
@@ -96,7 +96,7 @@ export default function ChallengeFilter({ className }: FiltersProps) {
               className="flex items-center gap-x-4 py-3 px-2.5 pr-4 rounded-lg transition hover:bg-background-card-foreground"
             >
               <Checkbox
-                checked={selectedChallengeStatus.length === allStatuses.length}
+                checked={selectedChallengeStatus.length === 0 || selectedChallengeStatus.length === allStatuses.length}
               />
               <span className="text-sm font-medium leading-none text-secondary">
                 {t("ChallengeCenter.filter__all_statuses")}

@@ -25,15 +25,15 @@ export default function CourseFilter({ className }: FiltersProps) {
 
   const allLanguages = Object.keys(courseLanguages) as CourseLanguages[];
   const displayText =
-    selectedLanguages.length === allLanguages.length
+    selectedLanguages.length === 0 || selectedLanguages.length === allLanguages.length
       ? t("ui.search_language_filter__label")
       : selectedLanguages.length === 1
         ? selectedLanguages[0]
         : `${selectedLanguages.length} ${t("ui.search_language_filter__selected_languages")}`;
 
   const toggleAllLanguages = () => {
-    if (selectedLanguages.length === allLanguages.length) {
-      // If all are selected, deselect all
+    if (selectedLanguages.length === 0 || selectedLanguages.length === allLanguages.length) {
+      // If all are selected or none selected, deselect all
       allLanguages.forEach((lang) => {
         if (selectedLanguages.includes(lang)) {
           toggleLanguage(lang);
@@ -50,8 +50,8 @@ export default function CourseFilter({ className }: FiltersProps) {
   };
 
   const handleLanguageClick = (language: CourseLanguages) => {
-    if (selectedLanguages.length === allLanguages.length) {
-      // If "All" is selected, deselect all and select only the clicked language
+    if (selectedLanguages.length === 0 || selectedLanguages.length === allLanguages.length) {
+      // If "All" is selected or none selected, deselect all and select only the clicked language
       allLanguages.forEach((lang) => {
         if (selectedLanguages.includes(lang)) {
           toggleLanguage(lang);
@@ -98,7 +98,7 @@ export default function CourseFilter({ className }: FiltersProps) {
               className="flex items-center gap-x-4 py-3 px-2.5 pr-4 rounded-lg transition hover:bg-background-card-foreground"
             >
               <Checkbox
-                checked={selectedLanguages.length === allLanguages.length}
+                checked={selectedLanguages.length === 0 || selectedLanguages.length === allLanguages.length}
               />
               <span className="text-sm font-medium leading-none text-secondary">
                 {t("ui.search_language_filter__all_languages")}

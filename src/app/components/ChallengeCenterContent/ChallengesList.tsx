@@ -81,6 +81,7 @@ export default function ChallengesList({
   const filteredChallenges = useMemo(
     () =>
       initialChallenges.filter((challenge) =>
+        selectedChallengeStatus.length === 0 ||
         selectedChallengeStatus.includes(challengeStatuses[challenge.slug]),
       ),
     [initialChallenges, selectedChallengeStatus, challengeStatuses],
@@ -117,9 +118,7 @@ export default function ChallengesList({
         challengeLanguage={selectedChallenge.language}
         challengeDifficulty={selectedChallenge.difficulty}
       />
-      {hasNoFilters ? (
-        <ChallengesEmpty />
-      ) : hasNoResults ? (
+      {hasNoResults && !hasNoFilters ? (
         <ChallengesEmpty />
       ) : (
         <>

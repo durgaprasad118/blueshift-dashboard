@@ -103,9 +103,7 @@ export default function CourseList({
 
   const hasNoResults = filteredCourses.length === 0;
   const hasNoFilters = !searchValue && selectedLanguages.length === 0;
-  const showGetStarted =
-    hasNoFilters ||
-    selectedLanguages.length === Object.keys(courseSections).length;
+  const showGetStarted = hasNoFilters;
 
   // Helper function to get the current lesson slug
   const getCurrentLessonSlug = (courseSlug: string) => {
@@ -143,9 +141,7 @@ export default function CourseList({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, ease: anticipate }}
     >
-      {hasNoFilters ? (
-        <CoursesEmpty type="no_filters" />
-      ) : hasNoResults ? (
+      {hasNoResults && !hasNoFilters ? (
         <CoursesEmpty type="no_results" />
       ) : (
         <>
